@@ -42,9 +42,9 @@ def list_files(bucket_name: str):
             config=Config(signature_version="oauth"),
             endpoint_url=secrets.endpoint
         )
+
     files = cos.Bucket(bucket_name).objects.all()
-
-
+    return files
 
 
 def upload_file(bucket_name: str, item_name: str, file_path: str):
@@ -82,8 +82,14 @@ def download_files(bucket_name: str, item_name: str):
             endpoint_url=secrets.endpoint
         )
     
-    file = cos.Object(bucket_name, item_name).get()
-    content = file['Body'].read()
-    with open(os.path.join(DUMP_DIR, item_name), 'wb') as f:
-        f.write(content)
+    try:
+        file = cos.Object(bucket_name, item_name).get()
+        content = file['Body'].read()
+        with open(os.path.join(DUMP_DIR, item_name.split('/')[-1]), 'wb+') as f:
+            f.write(content)
 
+        return True
+    
+    except Exception as e:
+        print(f"[ERROR] Downloading error {e}")
+        return False
