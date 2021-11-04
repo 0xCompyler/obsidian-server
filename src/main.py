@@ -9,13 +9,14 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from pydantic import BaseModel
 
-from scripts import file_handler
+from scripts import file_handler, assignment
 
 app = FastAPI()
 
 
 origins = [
     "http://localhost:8080",
+    "*"
 ]
 
 app.add_middleware(
@@ -57,7 +58,7 @@ def create_course(course_code: str = Form(...), file_obj: UploadFile = Form(...)
     return result_url
 
 
-@app.post("/assignment/question")
+@app.post("/assignment/question/upload")
 def upload_question(course_code: str = Form(...), assignment_id: str = Form(...), file_obj: UploadFile = Form(...)):
     """Create and upload an assignment
 
@@ -85,7 +86,7 @@ def upload_question(course_code: str = Form(...), assignment_id: str = Form(...)
     return result_url
 
 
-@app.post("assignment/answer/upload")
+@app.post("/assignment/answer/upload")
 def upload_assignment_answer(course_code: str = Form(...), assignment_id: str = Form(...), 
                             file_obj: UploadFile = Form(...), roll_no: str = Form(...)):
     DUMP_DIR = os.path.join(os.getcwd(), 'DUMP')
@@ -96,10 +97,23 @@ def upload_assignment_answer(course_code: str = Form(...), assignment_id: str = 
 
     result_url = file_handler.upload_file(
         "obsidian",
-        f"{course_code}/assignment/{assignment_id}/answers/{roll_no}.pdf",
+        f"{course_code}/assignment/{assignment_id}/answers/{roll_no}.docx",
         FILE_PATH
     )
     os.remove(FILE_PATH)
 
     return result_url
+
+class PlagResource(BaseModel):
+    course_code: str
+    assignment_id: str
+
+@app.post("/assignment/plagiarism")
+def check_plag(request_body: PlagResource):
+    course_code = request_body.course_code
+    assignment_id = request_body.assignment_id
+
+    assignment.cache_assignments(course_code, assignment_id)
+    plag_results = assignment.check_plagiarism()
+    return plag_results
 
