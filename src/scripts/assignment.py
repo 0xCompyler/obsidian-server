@@ -1,5 +1,4 @@
-import file_handler
-from scripts.file_handler import DUMP_DIR
+from . import file_handler
 
 import os
 import re
@@ -9,6 +8,9 @@ import numpy as np
 from nltk.corpus import stopwords
 from sklearn.feature_extraction.text import TfidfVectorizer 
 from sklearn.metrics.pairwise import cosine_similarity
+
+DUMP_DIR = os.path.join(os.getcwd(), "DUMP")
+
 
 def cache_assignments(course_code: str, assignment_id: str):
     """Downloads all the answers to an assignment to DUMP
@@ -91,6 +93,4 @@ def check_plagiarism():
     
     return results
 
-if __name__ == "__main__":
-    print(check_plagiarism())
-    
+
