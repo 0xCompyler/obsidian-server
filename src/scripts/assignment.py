@@ -1,5 +1,4 @@
 from . import file_handler
-
 import os
 import re
 import docx
@@ -91,6 +90,37 @@ def check_plagiarism():
         }
         results.append(temp_dict)
     
+    for file in files_list:
+        os.remove(os.path.join(DUMP_DIR, file))
+
+    return results
+
+
+
+def keyword_checker(keywords: list):
+    files_list = os.listdir(DUMP_DIR)
+    files_list = [f for f in  files_list if f[-4:] == 'docx']
+
+    results = []
+
+    for f in files_list:
+        temp_dict = {}
+        name = f.split('.')[0]
+
+        temp_dict['name'] = name
+        content = word_to_str(os.path.join(DUMP_DIR, f))
+
+        for word in keywords:
+            if word in content:
+                temp_dict[word] = "true"
+            else:
+                temp_dict[word] = "false"
+        
+        results.append(temp_dict)
+
+    for file in files_list:
+        os.remove(os.path.join(DUMP_DIR, file))
+
     return results
 
 
