@@ -1,8 +1,6 @@
 import os
 import shutil
 
-from logging import debug
-from typing import Optional
 from fastapi import FastAPI, File, Form
 from fastapi.datastructures import UploadFile
 from fastapi.middleware.cors import CORSMiddleware
@@ -117,3 +115,21 @@ def check_plag(request_body: PlagResource):
     plag_results = assignment.check_plagiarism()
     return plag_results
 
+
+class KeywordResource(BaseModel):
+    course_code: str
+    assignment_id: str
+    keywords: list
+
+@app.post("/assignment/keyword")
+def check_keywords(request_body: KeywordResource):
+    course_code = request_body.course_code
+    assignment_id = request_body.assignment_id
+    keywords = request_body.keywords
+
+    assignment.cache_assignments(course_code, assignment_id)
+    keyword_results = assignment.keyword_checker(keywords)
+
+    return keyword_results
+
+    
