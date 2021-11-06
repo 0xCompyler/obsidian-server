@@ -7,7 +7,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from pydantic import BaseModel
 
-from scripts import file_handler, assignment
+from scripts import file_handler, assignment, video
 
 app = FastAPI()
 
@@ -132,4 +132,18 @@ def check_keywords(request_body: KeywordResource):
 
     return keyword_results
 
+
+
+@app.post("/transcribe")
+def transcribe(file_obj: UploadFile = Form(...)):
+    DUMP_DIR = os.path.join(os.getcwd(), 'DUMP')
+    FILE_PATH = os.path.join(DUMP_DIR, file_obj.filename)
+
+    with open(FILE_PATH, 'wb+') as f:
+        shutil.copyfileobj(file_obj.file, f)
+
+    video.video_to_audio(FILE_PATH)
+    result = video.speech_to_text()
+    
+    return result
     
