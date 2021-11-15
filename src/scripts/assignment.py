@@ -108,13 +108,18 @@ def keyword_checker(keywords: list):
 
         temp_dict['name'] = name
         content = word_to_str(os.path.join(DUMP_DIR, f))
-
+        true_count = 0
+        false_count = 0
         for word in keywords:
             if word in content:
                 temp_dict[word] = "true"
+                true_count += 1
             else:
                 temp_dict[word] = "false"
+                false_count += 1
         
+        temp_dict['present'] = true_count
+        temp_dict['absent'] = false_count
         results.append(temp_dict)
 
     for file in files_list:
