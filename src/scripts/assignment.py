@@ -68,7 +68,6 @@ def plag_util(doc_id, files_list):
     for ix in similar_ix:
         if ix==doc_id:
             continue
-        # print(documents_df.iloc[ix]["name"], similarity_matrix[doc_id][ix])
         name_sim_dict = {
         "name": documents_df.iloc[ix]['name'],
         "sim_score": str(similarity_matrix[doc_id][ix]*100)
