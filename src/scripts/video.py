@@ -1,13 +1,7 @@
+import os
+import json
 from ibm_cloud_sdk_core.authenticators import IAMAuthenticator
 from ibm_watson import SpeechToTextV1
-from ibm_watson import NaturalLanguageUnderstandingV1
-from ibm_watson.natural_language_understanding_v1 \
-    import Features, EntitiesOptions, KeywordsOptions, \
-    SyntaxOptions, SyntaxOptionsTokens, CategoriesOptions, ConceptsOptions, \
-    EmotionOptions, RelationsOptions, SemanticRolesOptions
-import json
-
-import os
 from moviepy.editor import VideoFileClip
 from ibm_watson.websocket import RecognizeCallback
 
@@ -112,7 +106,6 @@ def speech_to_text():
                                 "final": j["final"],
                                 }
                 finalOutput.append(mydictTemp)
-    print(json.dumps(finalOutput, indent=2))
     os.remove("DUMP/temp.mp3")
     return finalOutput
 

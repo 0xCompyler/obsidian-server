@@ -51,6 +51,3 @@ def download_file(document_id):
             accept='application/pdf').get_result()
         f.write(result.content)
 
-# print(send_document("DUMP/199301020.docx"))
-print(get_document_status("7a8dec6f-dbe8-470c-a6ea-cbb30faa6c80"))
-# download_file("34992346-6287-4368-b778-b09d59f09324")
