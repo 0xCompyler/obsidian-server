@@ -52,7 +52,6 @@
       </ul>
     </li>
     <li><a href="#features">Features</a></li>
-    <li><a href="#roadmap">Roadmap</a></li>
     <li><a href="#contributing">Contributing</a></li>
     <li><a href="#license">License</a></li>
     <li><a href="#contact">Contact</a></li>
@@ -132,12 +131,24 @@ To get a local copy up and running follow these simple example steps.
 
 ### Plagiarism Detection
 
+Often, one educator is responsible for evaluating assignments of around 120 students (2 batches of 60 students). In such cases, detecting plagiarism by a human is a up hill task which also requires a lot of time. In order to solve this problem, we thought of computerizing the entire process of plagiarism checking, and yes it works on handwritten assignments too!
+
+We used TF-IDF to vectorize the documents and then calculated the cosine similarity between them to check for potential plagiarism.
+
+
 ### Automatic Keyword Checker
+
+As mentioned earlier, checking assignments, specially handwritten ones can become a tedious task. In order to further simplify the lives of teachers, we have come up with an automatic keyword checker which verifies the presence of certain keywords in the assignment. This will if not completely erradicate manual verification, simplify the process of evaluation to a great extent.
 
 ### Video Transcription
 
-### 
+Taking notes during online class is often difficult. That's why we came up with a solution to help students by using IBM Watson's Speech to text service to automatically generate closed captions for every class recording.
 
+### Integrated Video Conferencing
+
+### Attendance Monitoring
+
+### Performance Monitoring
 
 
 <p align="right">(<a href="#top">back to top</a>)</p>
@@ -145,13 +156,6 @@ To get a local copy up and running follow these simple example steps.
 
 
 <!-- ROADMAP -->
-## Roadmap
-
-- [] Build API Wrapper
-- [] Use Elastic Search to save recommendations
-- [] Add more algorithms
-- [] Add content-based recommendation generation
-
 
 See the [open issues](https://github.com/0xCompyler/obsidian-server/issues) for a full list of proposed features (and known issues).
 
